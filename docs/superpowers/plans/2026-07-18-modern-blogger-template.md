@@ -30,7 +30,7 @@
 **Interfaces:**
 - Produces: root element with v3 attributes; `<head>` complete; empty `<b:skin>` placeholder comment `/* SKIN */`; body landmarks `header.site-header`, `aside#drawer`, `div.drawer-overlay`, `main.site-main` containing `b:section id='main'` with locked Blog1 widget stub, `footer.site-footer`; `b:section id='drawer-widgets'` inside the drawer. Later tasks fill skin CSS (Task 2), Blog1 includables (Task 3), drawer widgets (Task 4), scripts (Task 5).
 
-- [ ] **Step 1: Write the full skeleton**
+- [x] **Step 1: Write the full skeleton**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -120,7 +120,7 @@
 </html>
 ```
 
-- [ ] **Step 2: Verify well-formedness**
+- [x] **Step 2: Verify well-formedness**
 
 Run: `[xml](Get-Content -Raw moderntemplate.xml) > $null; if ($?) { "XML OK" }`
 Expected: `XML OK`
@@ -140,7 +140,7 @@ Expected: `XML OK`
 - Consumes: class names from Task 1 (`site-header`, `site-title`, `icon-btn`, `drawer`, `drawer-overlay`, `site-main`, `site-footer`, `skip-link`).
 - Produces: CSS custom properties on `:root` / `[data-theme='dark']`; classes used by Task 3 (`post-card`, `post-card-title`, `post-meta`, `post-snippet`, `label-pill`, `post`, `post-title`, `post-body`, `pager`, `error-page`) and Task 4 (`drawer.open`, `drawer-overlay.visible`).
 
-- [ ] **Step 1: Write the skin CSS**
+- [x] **Step 1: Write the skin CSS**
 
 Replace `/* SKIN */` with the following (inside CDATA, so no escaping needed):
 
@@ -261,7 +261,7 @@ h1,h2,h3 { font-family:var(--serif); font-weight:500; color:var(--ink); letter-s
 }
 ```
 
-- [ ] **Step 2: Verify well-formedness** — same command as Task 1, expected `XML OK`.
+- [x] **Step 2: Verify well-formedness** — same command as Task 1, expected `XML OK`.
 
 - [ ] **Step 3: Commit** — `feat: add design-system skin CSS (cream/coral/dark-navy, dark mode tokens)`.
 
@@ -276,7 +276,7 @@ h1,h2,h3 { font-family:var(--serif); font-weight:500; color:var(--ink); letter-s
 - Consumes: CSS classes from Task 2.
 - Produces: complete post rendering for all `data:view` types. Uses built-in v2 Blog-widget includables `commentPicker`, `previousPageLink`/`nextPageLink` (verified present in `Contempo theme.xml:3578,3646`) so comments and pagination need no custom internals.
 
-- [ ] **Step 1: Write the widget includables**
+- [x] **Step 1: Write the widget includables**
 
 Inside `<b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2'>`:
 
@@ -300,7 +300,7 @@ Inside `<b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' versio
       <b:loop values='data:posts' var='post'>
         <article class='post-card'>
           <h2 class='post-card-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
-          <p class='post-meta'><data:post.date.format('MMMM d, yyyy')/></p>
+          <p class='post-meta'><data:post.timestamp/></p>
           <p class='post-snippet'><data:post.snippets.long/></p>
           <b:if cond='data:post.labels'>
             <div>
@@ -320,7 +320,7 @@ Inside `<b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' versio
         <article class='post'>
           <h1 class='post-title'><data:post.title/></h1>
           <p class='post-meta'>
-            <data:post.date.format('MMMM d, yyyy')/>
+            <data:post.timestamp/>
             <b:if cond='data:view.isPost and data:post.allowComments'>
               &#183; <a expr:href='data:post.url + &quot;#comments&quot;'><data:post.numberOfComments/> comments</a>
             </b:if>
@@ -358,7 +358,7 @@ Inside `<b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' versio
 
 Note: `commentPicker` and its comment-rendering internals are default includables of the version-2 Blog widget — do not define them. If Blogger's importer rejects the reference, grep `Contempo theme.xml` for `commentPicker` and copy its `commentPicker`/`comments`/`commentList`/`commentForm` includables verbatim as a fallback.
 
-- [ ] **Step 2: Verify well-formedness** — expected `XML OK`.
+- [x] **Step 2: Verify well-formedness** — expected `XML OK`.
 
 - [ ] **Step 3: Commit** — `feat: add Blog1 widget markup for index, item, and error views`.
 
@@ -373,7 +373,7 @@ Note: `commentPicker` and its comment-rendering internals are default includable
 - Consumes: `.drawer` CSS from Task 2.
 - Produces: four unlocked widgets with default (built-in) includables — search, about, labels, archive.
 
-- [ ] **Step 1: Add the widgets**
+- [x] **Step 1: Add the widgets**
 
 Inside the `drawer-widgets` section:
 
@@ -386,7 +386,7 @@ Inside the `drawer-widgets` section:
 
 Leave all widget bodies empty — Blogger supplies default v2 includables on import.
 
-- [ ] **Step 2: Verify well-formedness** — expected `XML OK`.
+- [x] **Step 2: Verify well-formedness** — expected `XML OK`.
 
 - [ ] **Step 3: Commit** — `feat: add drawer widgets (search, about, labels, archive)`.
 
@@ -401,7 +401,7 @@ Leave all widget bodies empty — Blogger supplies default v2 includables on imp
 - Consumes: ids from Task 1 (`menu-btn`, `theme-btn`, `drawer`, `drawer-overlay`, `year`), `.open`/`.visible` classes from Task 2, `.copy-btn` style from Task 2.
 - Produces: `localStorage` key `theme` with values `light`/`dark`; `data-theme` attribute on `<html>`.
 
-- [ ] **Step 1: Write the script**
+- [x] **Step 1: Write the script**
 
 ```xml
 <script>
@@ -456,9 +456,9 @@ Leave all widget bodies empty — Blogger supplies default v2 includables on imp
 
 Note: to avoid the copy button's own label being captured by `pre.innerText`, read the text BEFORE appending the button — implement as: capture `var code = pre.innerText;` first, then create/append the button and write `code` in the click handler (drop the `replace` hack).
 
-- [ ] **Step 2: Verify well-formedness** — expected `XML OK`.
+- [x] **Step 2: Verify well-formedness** — expected `XML OK`.
 
-- [ ] **Step 3: Static-year fallback check** — confirm the footer still reads sensibly with JS off (the `#year` span is empty but the copyright line and blog title remain). No change needed if so.
+- [x] **Step 3: Static-year fallback check** — confirm the footer still reads sensibly with JS off (the `#year` span is empty but the copyright line and blog title remain). No change needed if so.
 
 - [ ] **Step 4: Commit** — `feat: add drawer, theme-toggle, copy-button, and year scripts`.
 
@@ -472,9 +472,9 @@ Note: to avoid the copy button's own label being captured by `pre.innerText`, re
 **Interfaces:**
 - Consumes: finished `moderntemplate.xml`.
 
-- [ ] **Step 1: Full-file review** — read `moderntemplate.xml` top to bottom; check every id referenced by JS exists exactly once, every class used in markup exists in the skin, and no `TODO`/placeholder comments remain.
+- [x] **Step 1: Full-file review** — read `moderntemplate.xml` top to bottom; check every id referenced by JS exists exactly once, every class used in markup exists in the skin, and no `TODO`/placeholder comments remain.
 
-- [ ] **Step 2: Well-formedness + size check**
+- [x] **Step 2: Well-formedness + size check**
 
 Run: `[xml](Get-Content -Raw moderntemplate.xml) > $null; if ($?) { "XML OK" }; (Get-Item moderntemplate.xml).Length`
 Expected: `XML OK` and a size in the 15–40KB range.

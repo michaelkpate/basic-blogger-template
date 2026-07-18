@@ -4,6 +4,18 @@
 
 This template is built from scratch with schema markup,  i use schema because this help search engine understand the part of the website structure and help indexing in search engine. And i use open graph protocol for help social media i.e facebook to scraping and make preview for blog posting.
 
+### Installing moderntemplate.xml
+
+`moderntemplate.xml` is the modern v3 theme (warm editorial design, dark mode, slide-out drawer, styled code blocks). To install:
+
+1. **Back up your current theme first**: Blogger dashboard → Theme → ⋮ → Backup.
+2. Theme → Customize dropdown → **Edit HTML** → select all → paste the contents of `moderntemplate.xml` → Save.
+3. Go to **Layout** to arrange the drawer widgets (Search, About, Labels, Archive).
+4. Verify: homepage, an old post, a code-heavy post, a label page, search, a bad URL (404), both light/dark themes, and a phone-width window.
+5. Check post schema with the [Rich Results test](https://search.google.com/test/rich-results).
+
+Code blocks: paste code inside `<pre><code>...</code></pre>` in HTML view; a Copy button is added automatically. Optional manual syntax highlighting via `<span class='tok-k'>` (keyword), `tok-s` (string), `tok-c` (comment), `tok-n` (number), `tok-f` (function).
+
 ### Getting Started
 
 Please review the markup structure before editing and make any changes using this template.
