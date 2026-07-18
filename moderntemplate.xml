@@ -170,7 +170,7 @@ h1,h2,h3 { font-family:var(--serif); font-weight:500; color:var(--ink); letter-s
     <header class='site-header'>
       <button aria-controls='drawer' aria-expanded='false' aria-label='Open menu' class='icon-btn' id='menu-btn' type='button'>&#9776;</button>
       <a class='site-title' expr:href='data:blog.homepageUrl'><data:blog.title/></a>
-      <button aria-label='Toggle dark mode' class='icon-btn' id='theme-btn' type='button'>&#9789;</button>
+      <button aria-label='Toggle dark mode' class='icon-btn' id='theme-btn' type='button'>&#9790;</button>
     </header>
 
     <div class='drawer-overlay' id='drawer-overlay'></div>
@@ -278,12 +278,24 @@ h1,h2,h3 { font-family:var(--serif); font-weight:500; color:var(--ink); letter-s
   try { saved = localStorage.getItem('theme'); } catch (e) {}
   if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
 
-  document.getElementById('theme-btn').addEventListener('click', function () {
-    var dark = root.getAttribute('data-theme') === 'dark' ||
-      (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
-    var next = dark ? 'light' : 'dark';
+  var themeBtn = document.getElementById('theme-btn');
+  function effectiveDark() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'dark') return true;
+    if (t === 'light') return false;
+    return matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function updateThemeIcon() {
+    var dark = effectiveDark();
+    themeBtn.textContent = dark ? '☀' : '☾';
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  updateThemeIcon();
+  themeBtn.addEventListener('click', function () {
+    var next = effectiveDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('theme', next); } catch (e) {}
+    updateThemeIcon();
   });
 
   var drawer = document.getElementById('drawer');
